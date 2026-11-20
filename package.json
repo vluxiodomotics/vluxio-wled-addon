@@ -1,0 +1,33 @@
+{
+  "name": "freeathome-wled",
+  "version": "1.6.1",
+  "description": "Lokale ABB-free@home add-on voor WLED-controllers",
+  "author": "Vluxio",
+  "main": "build/main.js",
+  "private": true,
+  "scripts": {
+    "clean": "node scripts/clean-build.mjs",
+    "build": "tsc -p tsconfig.json",
+    "build:prod": "pnpm run clean && tsc -p tsconfig.prod.json",
+    "inventory": "node scripts/generate-software-inventory.mjs",
+    "validate": "free-at-home-cli validate && node scripts/validate-metadata-translations.mjs",
+    "pack:addon": "free-at-home-cli buildscriptarchive build assets",
+    "test": "pnpm run build && node --test build/test/*.test.js",
+    "start": "node build/main.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@busch-jaeger/free-at-home": "0.37.0",
+    "ws": "8.21.0"
+  },
+  "devDependencies": {
+    "@busch-jaeger/free-at-home-cli": "0.13.1",
+    "@types/node": "18.19.130",
+    "@types/ws": "8.18.1",
+    "typescript": "5.9.3"
+  },
+  "packageManager": "pnpm@11.7.0",
+  "license": "MIT"
+}

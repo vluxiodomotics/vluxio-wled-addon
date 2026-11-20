@@ -1,0 +1,8 @@
+nodeLinker: hoisted
+strictDepBuilds: true
+overrides:
+  ws: 8.21.0
+allowBuilds:
+  "@serialport/bindings-cpp": false
+  bufferutil: false
+  core-js: false

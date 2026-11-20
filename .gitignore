@@ -1,0 +1,13 @@
+node_modules/
+build/
+*.tar
+*.rar
+*.log
+.env
+.env.*
+!.env.example
+INVENTARISATIE.md
+PRAKTIJKTEST*.md
+TESTRESULTAAT*.md
+VERSIE-*.md
+PUBLICATIECHECKLIST.md
