@@ -10,6 +10,12 @@ This is the first public test version. It provides a main dimmer, WLED segment s
 
 The add-on creates devices only for configured controllers. It reads WLED segment IDs at startup and after successful full state reads, adding new segments and removing ones no longer present. A connection failure does not delete segment devices.
 
+## Real-world testing
+
+The Vluxio WLED Add-on has been running in daily use on an ABB-free@home System Access Point 2 (SysAP 2) for approximately four months. During this period, issues identified through regular use were corrected and retested. No known operational issues remain in the existing installation.
+
+Version 1.6.1 builds on this extensively tested implementation and introduces configuration changes to make the add-on suitable for use in other installations. These changes have passed automated validation but have not yet been independently verified through a fresh installation.
+
 ## Requirements and installation
 
 - ABB free@home System Access Point 2.0 with firmware 3.0 or newer and the Local API enabled.
@@ -24,7 +30,6 @@ Only the preset numbers entered in the **Selectable preset IDs** field are avail
 
 The TypeScript build, ABB metadata validation, NL/DE/EN settings translations and 28 automated tests passed. The Add controller and remove controls have appeared on one SysAP. Real-device checks are still needed for a second controller, controller removal, segment changes, existing links and scenes, reconnects, and CPU/RAM use. Please report the SysAP firmware, WLED version, the relevant log message and reproduction steps when filing an issue; do not post passwords or private network details.
 
-The Vluxio logo is included in the source and package. The locally uploaded add-on does not currently show it on the SysAP tile; the supported mechanism for tile artwork is under investigation.
 
 ## License
 
