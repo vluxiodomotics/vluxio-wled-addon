@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   package:
@@ -57,3 +57,29 @@ jobs:
           name: vluxio-wled-addon-test
           path: '**/*.tar'
           if-no-files-found: error
+
+      
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          TAG="v${VERSION}"
+
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "ERROR: Release $TAG already exists"
+            exit 1
+          fi
+
+          mapfile -d '' archives < <(find . -type f -name '*.tar' -print0)
+
+          if [ "${#archives[@]}" -ne 1 ]; then
+            echo "ERROR: Expected exactly one .tar archive"
+            exit 1
+          fi
+
+          gh release create "$TAG" "${archives[0]}" \
+            --target "$GITHUB_SHA" \
+            --title "Vluxio WLED Add-on ${VERSION}" \
+            --notes-file RELEASE_NOTES.md
