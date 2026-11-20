@@ -1,0 +1,59 @@
+
+name: Build WLED add-on package
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.7.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run tests
+        run: pnpm test
+
+      - name: Validate add-on
+        run: pnpm validate
+
+      - name: Build production code
+        run: pnpm run build:prod
+
+      - name: Create installation archive
+        run: pnpm run pack:addon
+
+      - name: Locate installation archive
+        shell: bash
+        run: |
+          find . -type f -name '*.tar' -print
+          count=$(find . -type f -name '*.tar' | wc -l)
+          if [ "$count" -eq 0 ]; then
+            echo "ERROR: No .tar archive found"
+            exit 1
+          fi
+
+      - name: Upload installation archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: vluxio-wled-addon-test
+          path: '**/*.tar'
+          if-no-files-found: error
