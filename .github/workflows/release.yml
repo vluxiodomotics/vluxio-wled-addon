@@ -52,7 +52,7 @@ jobs:
           fi
 
       - name: Upload installation archive
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: vluxio-wled-addon
           path: '**/*.tar'
