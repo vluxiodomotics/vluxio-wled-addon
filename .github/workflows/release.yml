@@ -54,7 +54,7 @@ jobs:
       - name: Upload installation archive
         uses: actions/upload-artifact@v4
         with:
-          name: vluxio-wled-addon-test
+          name: vluxio-wled-addon
           path: '**/*.tar'
           if-no-files-found: error
 
